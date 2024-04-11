@@ -11,7 +11,7 @@ spec:
 
   # Source of the application manifests
   source:
-    repoURL: 'https://github.com/Al-HusseinHameedJasim/do-kubernetes-challenge'
+    repoURL: 'https://github.com/ManojDubey1/sample-project'
     targetRevision: HEAD
     path: ./manifests
 
