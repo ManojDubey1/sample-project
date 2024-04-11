@@ -1,29 +1,21 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: simple-app
-  # You'll usually want to add your resources to the argocd namespace.
-  namespace: argocd
-
+  name: simple-app-deployment
+  labels:
+    app: simple-app
 spec:
-  # The project the application belongs to.
-  project: default
-
-  # Source of the application manifests
-  source:
-    repoURL: 'https://github.com/ManojDubey1/sample-project'
-    targetRevision: HEAD
-    path: ./manifests
-
-  # Destination cluster and namespace to deploy the application
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: simple-app
-
-  # Sync policy
-  syncPolicy:
-    automated:
-      prune: true # Specifies if resources should be pruned during auto-syncing ( false by default ).
-      selfHeal: true # Specifies if partial app sync should be executed when resources are changed only in target Kubernetes cluster and no git change detected ( false by default ).
-    syncOptions:     # Sync options which modifies sync behavior
-    - CreateNamespace=true # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.
+  replicas: 1
+  selector:
+    matchLabels:
+      app: simeple-app
+  template:
+    metadata:
+      labels:
+        app: simeple-app
+    spec:
+      containers:
+      - name: simeple-app
+        image: alhusseinjasim/simple-app:9cd3729
+        ports:
+        - containerPort: 80
